@@ -10,6 +10,7 @@ import { TodoService } from '../../shared/services/todo.service';
 export class TodoItemComponent {
   @Input() todo!: Todo;
   @Output() deletedTodo: EventEmitter<number> = new EventEmitter<number>();
+  @Output() updatedTodo: EventEmitter<Todo> = new EventEmitter<Todo>();
 
   constructor(private todoService: TodoService) {}
 
@@ -20,6 +21,7 @@ export class TodoItemComponent {
   }
 
   onTaskChecked(): void {
-    this.todoService.updateTodo(this.todo);
+    //this.todoService.updateTodo(this.todo);
+    this.updatedTodo.emit(this.todo);
   }
 }

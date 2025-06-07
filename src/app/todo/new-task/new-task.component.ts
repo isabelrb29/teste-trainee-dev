@@ -9,19 +9,43 @@ import { TodoService } from 'src/app/shared/services/todo.service';
 })
 export class NewTaskComponent {
   newTaskTitle: string = '';
+  editingTodo: Todo | null = null;
 
   constructor(private todoService: TodoService) { }
 
   addTask() {
     if (!this.newTaskTitle.trim()) return;
-    
+
+    if (this.editingTodo) {
+    // Atualizar a tarefa existente
+    const updatedTodo: Todo = {
+      ...this.editingTodo,
+      title: this.newTaskTitle
+    };
+    this.todoService.updateTodo(updatedTodo);
+    this.editingTodo = null;
+  } else {
+    // Criar nova tarefa
     const newTodo: Todo = {
+      id: this.todoService.getTodoNewId(),
+      title: this.newTaskTitle,
+      completed: false
+    };
+    this.todoService.addTodo(newTodo);
+  }
+  this.newTaskTitle = '';
+    /*const newTodo: Todo = {
       id: this.todoService.getTodoNewId(),
       title: this.newTaskTitle,
       completed: false
     };
 
     this.todoService.addTodo(newTodo);
-    this.newTaskTitle = '';
+    this.newTaskTitle = '';*/
+  }
+
+  startEdit(todo: Todo): void {
+    this.editingTodo = todo;
+    this.newTaskTitle = todo.title;
   }
 }

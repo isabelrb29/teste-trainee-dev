@@ -1,6 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { Todo } from '../shared/models/todo.model';
 import { TodoService } from '../shared/services/todo.service';
+import { NewTaskComponent } from './new-task/new-task.component';
 
 @Component({
   selector: 'app-todo',
@@ -10,6 +11,7 @@ import { TodoService } from '../shared/services/todo.service';
 export class TodoComponent implements OnInit {
   todos: Todo[] = [];
   showCompletedTasks: boolean = true;
+  @ViewChild(NewTaskComponent) newTaskComponent!: NewTaskComponent;
 
   constructor(private todoService: TodoService) { }
 
@@ -35,6 +37,10 @@ export class TodoComponent implements OnInit {
 
   updateTodo(updatedTodo: Todo) {
     this.todoService.updateTodo(updatedTodo);
+  }
+
+  onEditTodo(todo: Todo): void {
+    this.newTaskComponent.startEdit(todo);
   }
 
   deleteTodo(todoId: number) {
