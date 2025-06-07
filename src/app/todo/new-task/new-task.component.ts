@@ -13,7 +13,8 @@ export class NewTaskComponent {
   constructor(private todoService: TodoService) { }
 
   addTask() {
-  
+    if (!this.newTaskTitle.trim()) return;
+    
     const newTodo: Todo = {
       id: this.todoService.getTodoNewId(),
       title: this.newTaskTitle,
