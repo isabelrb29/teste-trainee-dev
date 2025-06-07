@@ -31,6 +31,11 @@
   color: blue;
   width: 10px;
   width: fit-content;
+  background: none;
+  border: none;
+  cursor: pointer;
+  margin-left: auto;
+  margin-right: 20px;
 }
 .todo-item_delete {
   width: 10px;
